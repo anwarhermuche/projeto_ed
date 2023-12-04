@@ -62,7 +62,7 @@ void Binario::RemoverElemento(const int &posicao)
     this->arquivoBin.read((char *)&elementoAux, sizeof(tabela));
     if (elementoAux.valido == 1)
     {
-      cout << elementoAux.anzsic06 << endl;
+      cout << elementoAux.area << endl;
       elementoAux.valido = 0;
       this->arquivoBin.seekp(cont * sizeof(tabela));
       this->arquivoBin.write((char *)&elementoAux, sizeof(tabela));
@@ -172,6 +172,7 @@ void Binario::AdicionarElemento()
   switch (opc)
   {
     case 1:
+      cin.ignore();
       cout << "Anzsic06: ";
       cin.getline(elementoAux.anzsic06, 255);
       cout << "Area: ";
@@ -195,7 +196,8 @@ void Binario::AdicionarElemento()
       cout << endl;
 
       for (int i = 0; i < segOpc; i++)
-      {
+      { 
+		cin.ignore();
         cout << "Anzsic06: ";
         cin.getline(elementoAux.anzsic06, 255);
         cout << "Area: ";
@@ -224,17 +226,17 @@ void Binario::AdicionarElemento()
 }
 
 // Função para buscar elementos por anzsic06
-void Binario::BuscarPorAnzsic06()
+void Binario::BuscarPorArea()
 {
   this->arquivoBin.open(NOME_ARQ_BINARIO, ios::in | ios::binary | ios::ate);
 
   int qtdElementos = this->QuantidadeDeElementos();
 
-  cout << "\nDigite o Anzsic 06 desejado > ";
+  cout << "\nDigite a Area desejada > ";
   cin.clear();
   cin.ignore();
-  char anzsic06[255];
-  cin.getline(anzsic06, 255);
+  char area[255];
+  cin.getline(area, 255);
   cout << endl;
 
   int cont = 0;
@@ -246,7 +248,7 @@ void Binario::BuscarPorAnzsic06()
   {
     this->arquivoBin.seekg(cont * sizeof(tabela));
     this->arquivoBin.read((char *)&elemento, sizeof(tabela));
-    if (strcmp(anzsic06, elemento.anzsic06) == 0)
+    if (strcmp(area, elemento.area) == 0)
     {
       if (elemento.valido == 1)
       {
@@ -262,7 +264,7 @@ void Binario::BuscarPorAnzsic06()
   }
 
   if (aux == 0)
-    cout << "Não há elementos cadastrados com esse anzsic 06!\n";
+    cout << "Não há elementos cadastrados com essa Area!\n";
 
   this->Fechar();
 }
@@ -346,7 +348,7 @@ void Binario::AdicinoarElementoEmPosicaoEspecifica(int posicao) {
   }
 
   tabela elementoAux;
-
+  cin.ignore();
   cout << "Anzsic06: ";
   cin.getline(elementoAux.anzsic06, 255);
   cout << "Area: ";
@@ -395,7 +397,7 @@ void Binario::AlterarDadosEmPosicaoEspecifica(int posicao) {
   }
 
   tabela elementoAux;
-
+  cin.ignore();
   cout << "Anzsic06: ";
   cin.getline(elementoAux.anzsic06, 255);
   cout << "Area: ";
